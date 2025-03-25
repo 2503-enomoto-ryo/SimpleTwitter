@@ -121,7 +121,9 @@ public class SettingServlet extends HttpServlet {
             errorMessages.add("アカウント名は20文字以下で入力してください");
         }
 
-      //アカウント重複確認を行い、
+      //アカウント重複確認を行い、データベースに同名のアカウントが存在するか、
+      //また現在ログインしているアカウントとIDが同じかどうか確認
+      //アカウントが存在し、かつログイン中のアカウントとIDが別ならエラーメッセージを表示
         if (existAccout != null && existAccout.getId() != id) {
         	errorMessages.add("すでに存在するアカウントです");
         }

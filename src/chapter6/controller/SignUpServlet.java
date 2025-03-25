@@ -99,6 +99,11 @@ public class SignUpServlet extends HttpServlet {
 	          errorMessages.add("アカウント名は20文字以下で入力してください");
 	      }
 
+	      //アカウントが重複していれば、登録できないようにする
+	      if (new UserService().select(account) != null) {
+	    	  errorMessages.add("すでに存在するアカウントです");
+	      }
+
 	      if (StringUtils.isEmpty(password)) {
 	          errorMessages.add("パスワードを入力してください");
 	      }

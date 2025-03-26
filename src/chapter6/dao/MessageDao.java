@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import chapter6.beans.Message;
+import chapter6.exception.NoRowsUpdatedRuntimeException;
 import chapter6.exception.SQLRuntimeException;
 import chapter6.logging.InitApplication;
 
@@ -95,6 +96,7 @@ public class MessageDao {
 		}
 	}
 
+	//つぶやきの編集画面表示
 	public Message select(Connection connection, Integer id) {
 		log.info(new Object() {
 		}.getClass().getEnclosingClass().getName() +
@@ -122,7 +124,7 @@ public class MessageDao {
 			close(ps);
 		}
 	}
-
+	//toMessages(rs)メソッドの定義
 	private List<Message> toMessages(ResultSet rs) throws SQLException {
 		log.info(new Object() {
 		}.getClass().getEnclosingClass().getName() +
@@ -146,4 +148,39 @@ public class MessageDao {
 			close(rs);
 		}
 	}
+
+	public void update(Connection connection, Message message) {
+		log.info(new Object() {
+		}.getClass().getEnclosingClass().getName() +
+				" : " + new Object() {
+				}.getClass().getEnclosingMethod().getName());
+
+		PreparedStatement ps = null;
+		try {
+			StringBuilder sql = new StringBuilder();
+			sql.append("UPDATE messages SET ");
+			sql.append("    text = ?, ");
+			sql.append("    updated_date = CURRENT_TIMESTAMP ");
+			sql.append("WHERE id = ?");
+
+			ps = connection.prepareStatement(sql.toString());
+
+			ps.setString(1, message.getText());
+			ps.setInt(2, message.getId());
+
+			int count = ps.executeUpdate();
+			if (count == 0) {
+				log.log(Level.SEVERE, "更新対象のレコードが存在しません", new NoRowsUpdatedRuntimeException());
+				throw new NoRowsUpdatedRuntimeException();
+			}
+		} catch (SQLException e) {
+			log.log(Level.SEVERE, new Object() {
+			}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
+			throw new SQLRuntimeException(e);
+		} finally {
+			close(ps);
+		}
+	}
+
+
 }

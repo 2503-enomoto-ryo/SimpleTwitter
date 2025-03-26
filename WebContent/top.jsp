@@ -80,6 +80,18 @@
 							<fmt:formatDate value="${message.createdDate}"
 								pattern="yyyy/MM/dd HH:mm:ss" />
 						</div>
+						<%--つぶやきの編集・削除--%>
+						<div class="edit">
+							<form action="edit" method="get">
+								<input name="message_id" type="hidden" value="${message.id}">
+								<input type="submit" value="編集">
+							</form>
+							<form action="deleteMessage" method="post">
+								<input name="message_id" type="hidden" value="${message.id}">
+								<input type="submit" value="削除">
+							</form>
+
+						</div>
 					</div>
 				</c:forEach>
 			</div>

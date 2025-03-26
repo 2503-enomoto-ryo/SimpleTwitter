@@ -108,4 +108,73 @@ public class MessageService {
 			close(connection);
 		}
 	}
+
+	//つぶやきの削除
+	public void delete(String messageId) {
+		//ログを残す
+		log.info(new Object() {
+		}.getClass().getEnclosingClass().getName() +
+				" : " + new Object() {
+				}.getClass().getEnclosingMethod().getName());
+
+		Connection connection = null;
+		try {
+			//データベース（DB）との接続を取得
+			connection = getConnection();
+			//リクエストから受け取ったString型のmessageIdを
+			//DBのmessage_idの型に合わせるため型変換
+			Integer id = Integer.parseInt(messageId);
+
+			//MessageDaoのselectメソッドを呼び、コミット
+			new MessageDao().delete(connection, id);
+			commit(connection);
+
+		} catch (RuntimeException e) {
+			rollback(connection);
+			log.log(Level.SEVERE, new Object() {
+			}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
+			log.log(Level.SEVERE, new Object() {
+			}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
+			throw e;
+		} finally {
+			close(connection);
+		}
+	}
+
+	//つぶやきの編集
+	public Message select(Integer id) {
+		//ログを残す
+		log.info(new Object() {
+		}.getClass().getEnclosingClass().getName() +
+				" : " + new Object() {
+				}.getClass().getEnclosingMethod().getName());
+
+		Connection connection = null;
+		try {
+			//データベース（DB）との接続を取得
+			connection = getConnection();
+
+			//MessageDaoのselect(connection, id)メソッドを呼び、コミット
+			Message message = new MessageDao().select(connection, id);
+			commit(connection);
+
+			return message;
+
+		} catch (RuntimeException e) {
+			rollback(connection);
+			log.log(Level.SEVERE, new Object() {
+			}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
+			throw e;
+		} catch (Error e) {
+			rollback(connection);
+			log.log(Level.SEVERE, new Object() {
+			}.getClass().getEnclosingClass().getName() + " : " + e.toString(), e);
+			throw e;
+		} finally {
+			close(connection);
+		}
+	}
 }

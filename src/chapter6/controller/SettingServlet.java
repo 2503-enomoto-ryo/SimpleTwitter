@@ -109,7 +109,7 @@ public class SettingServlet extends HttpServlet {
         String account = user.getAccount();
         String password = user.getPassword();
         String email = user.getEmail();
-        Integer id = user.getId();
+
         User existAccout = new UserService().select(account);
 
         if (!StringUtils.isEmpty(name) && (20 < name.length())) {
@@ -124,7 +124,7 @@ public class SettingServlet extends HttpServlet {
       //アカウント重複確認を行い、データベースに同名のアカウントが存在するか、
       //また現在ログインしているアカウントとIDが同じかどうか確認
       //アカウントが存在し、かつログイン中のアカウントとIDが別ならエラーメッセージを表示
-        if (existAccout != null && existAccout.getId() != id) {
+        if (existAccout != null && existAccout.getId() != user.getId()) {
         	errorMessages.add("すでに存在するアカウントです");
         }
 

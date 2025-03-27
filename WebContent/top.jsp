@@ -74,7 +74,7 @@
 							<span class="name"><c:out value="${message.name}" /></span>
 						</div>
 						<div class="text">
-							<c:out value="${message.text}" />
+							<pre><c:out value="${message.text}" /></pre>
 						</div>
 						<div class="date">
 							<fmt:formatDate value="${message.createdDate}"
@@ -82,15 +82,17 @@
 						</div>
 						<%--つぶやきの編集・削除--%>
 						<div class="edit">
-							<form action="edit" method="get">
-								<input name="message_id" type="hidden" value="${message.id}">
-								<input type="submit" value="編集">
-							</form>
-							<form action="deleteMessage" method="post">
-								<input name="message_id" type="hidden" value="${message.id}">
-								<input type="submit" value="削除">
-							</form>
-
+							<%--ログイン時のみボタン表示--%>
+							<c:if test="${message.userId == loginUser.id}">
+								<form action="edit" method="get">
+									<input name="message_id" type="hidden" value="${message.id}">
+									<input type="submit" value="編集">
+								</form>
+								<form action="deleteMessage" method="post">
+									<input name="message_id" type="hidden" value="${message.id}">
+									<input type="submit" value="削除">
+								</form>
+							</c:if>
 						</div>
 					</div>
 				</c:forEach>

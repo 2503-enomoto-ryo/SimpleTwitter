@@ -114,9 +114,12 @@ public class MessageDao {
 			ResultSet rs = ps.executeQuery();
 
 			List<Message> messages = toMessages(rs);
+			//toMessages(rs)メソッドの結果、該当データがなく、
+			//messagesに何も値が入っていない場合はnullを返して、EditServletのバリデーションにあてる
 			if(messages.isEmpty()) {
 				return null;
 			}
+			//toMessages(rs)で取得できた値を返す
 			return messages.get(0);
 
 		} catch (SQLException e) {

@@ -96,19 +96,24 @@
 				</div>
 				<div class="comments">
 					<c:forEach items="${comments}" var="comment">
-						<div class="comment">
-							<div class="account-name">
-								<span class="account"><c:out value="${comment.id}" /></span>
-								<span class="name"><c:out value="${comment.account}" /></span>
+						<c:if test="${message.id == comment.messageId}">
+							<div class="comment">
+								<div class="account-name">
+									<span class="account"><c:out value="${comment.account}" /></span>
+									<span class="name"><c:out value="${comment.name}" /></span>
+									<pre><c:out value="${comment.text}" /></pre>
+								</div>
 							</div>
-						</div>
+						</c:if>
 					</c:forEach>
-					<form action="comment" method="post">
-						<br />
-						<input name="comment" type="hidden">
-						<textarea name="text" cols="100" rows="5" class="tweet-box"></textarea>
-						<input type="submit" value="返信">（140文字まで）
-					</form>
+ 					<c:if test="${ isShowMessageForm }">
+						<form action="comment" method="post">
+							<br />
+							<input name="message_id" type="hidden" value="${message.id}">
+							<textarea name="text" cols="100" rows="5" class="tweet-box"></textarea>
+							<input type="submit" value="返信">（140文字まで）
+						</form>
+					</c:if>
 				</div>
 			</c:forEach>
 		</div>

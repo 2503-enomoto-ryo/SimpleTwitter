@@ -108,6 +108,12 @@ a.profile .account {
 	font: small-caption;
 }
 
+.comment .date {
+	font-weight: lighter;
+	color: gray;
+	font: small-caption;
+}
+
 .copyright {
 	width: 250px;
 	margin: 0 auto;

@@ -23,6 +23,11 @@
 				<a href="setting">設定</a>
 				<a href="logout">ログアウト</a>
 			</c:if>
+			<form action="./" method="get">
+				<span class="select_date">日付　</span>
+				<span><input name="start" type="date" value="${start}"/> ～ <input name="end" type="date" value="${end}"/></span>
+				<span><input name="select_date" type=submit value="絞込"/></span>
+			</form>
 			<c:if test="${ not empty loginUser }">
 				<div class="profile">
 					<div class="name">
@@ -102,6 +107,9 @@
 									<span class="account"><c:out value="${comment.account}" /></span>
 									<span class="name"><c:out value="${comment.name}" /></span>
 									<pre><c:out value="${comment.text}" /></pre>
+									<div class="date">
+										<fmt:formatDate value="${comment.createdDate}" pattern="yyyy/MM/dd HH:mm:ss" />
+									</div>
 								</div>
 							</div>
 						</c:if>

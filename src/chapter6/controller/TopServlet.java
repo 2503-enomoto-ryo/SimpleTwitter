@@ -55,11 +55,20 @@ public class TopServlet extends HttpServlet {
 	   * String型のuser_idの値をrequest.getParameter("user_id")で
 	   * JSPから受け取るように設定
 	   * MessageServiceのselectに引数としてString型のuser_idを追加
+	   *
+	   *String型のstart, endの値をrequest.getParameterで
+	   * JSPから受け取るように設定
+	   * 絞り込み機能実装のため、引数にString型のstart, endを追加
 	   */
 	  String userId = request.getParameter("user_id");
-	  List<UserMessage> messages = new MessageService().select(userId);
+	  String start = request.getParameter("start");
+	  String end = request.getParameter("end");
+	  List<UserMessage> messages = new MessageService().select(userId, start, end);
 	  List<UserComment> comments = new CommentService().select();
 
+	  //各値をリクエストにセット
+	  request.setAttribute("start", start);
+	  request.setAttribute("end", end);
 	  request.setAttribute("messages", messages);
 	  request.setAttribute("comments", comments);
 	  request.setAttribute("isShowMessageForm", isShowMessageForm);

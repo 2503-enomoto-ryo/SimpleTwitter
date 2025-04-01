@@ -1,4 +1,5 @@
 package chapter6.filter;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ import javax.servlet.http.HttpSession;
 
 import chapter6.beans.User;
 
-@WebFilter(urlPatterns = {"/setting", "/edit"})
+@WebFilter(urlPatterns = { "/setting", "/edit" })
 public class LoginFilter implements Filter {
 
 	@Override
@@ -27,21 +28,23 @@ public class LoginFilter implements Filter {
 		HttpServletResponse httpServletResponse = (HttpServletResponse) response;
 		User user = (User) httpServletRequest.getSession().getAttribute("loginUser");
 
-		if(user != null) {
+		if (user != null) {
 			chain.doFilter(request, response);
 		} else {
 			HttpSession session = httpServletRequest.getSession();
 			List<String> errorMessages = new ArrayList<String>();
-            errorMessages.add("ログインをしてください");
-            session.setAttribute("errorMessages", errorMessages);
+			errorMessages.add("ログインをしてください");
+			session.setAttribute("errorMessages", errorMessages);
 			httpServletResponse.sendRedirect("./login");
 		}
 	}
 
 	@Override
-	public void init(FilterConfig config) {}
+	public void init(FilterConfig config) {
+	}
 
 	@Override
-	public void destroy() {}
+	public void destroy() {
+	}
 
 }

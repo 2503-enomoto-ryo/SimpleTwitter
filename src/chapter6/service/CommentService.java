@@ -13,6 +13,7 @@ import chapter6.beans.UserComment;
 import chapter6.dao.CommentDao;
 import chapter6.dao.UserCommentDao;
 import chapter6.logging.InitApplication;
+
 public class CommentService {
 
 	/**
@@ -29,13 +30,13 @@ public class CommentService {
 		application.init();
 
 	}
+
 	//コメントの登録
 	public void insert(Comment comment) {
 		log.info(new Object() {
 		}.getClass().getEnclosingClass().getName() +
 				" : " + new Object() {
 				}.getClass().getEnclosingMethod().getName());
-
 
 		Connection connection = null;
 		try {

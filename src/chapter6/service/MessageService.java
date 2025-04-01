@@ -63,7 +63,7 @@ public class MessageService {
 	}
 
 	/*
-	 * selectの引数にString型のuserIdを追加
+	 * selectの引数にString型のuserId, start, endを追加
 	 */
 	public List<UserMessage> select(String userId, String start, String end) {
 
@@ -72,6 +72,7 @@ public class MessageService {
 				" : " + new Object() {
 				}.getClass().getEnclosingMethod().getName());
 
+		//1000件上限で取得
 		final int LIMIT_NUM = 1000;
 		Connection connection = null;
 		try {
@@ -86,20 +87,20 @@ public class MessageService {
 				id = Integer.parseInt(userId);
 			}
 
+			//リクエストにstartの値（絞り込み開始日）があれば時間表示を結合
 			if (!StringUtils.isBlank(start)) {
 				start += " 00:00:00";
 			} else {
 				start = "2020/01/01 00:00:00";
 			}
 
-			if(!StringUtils.isBlank(end)) {
+			if (!StringUtils.isBlank(end)) {
 				end += " 23:59:59";
 			} else {
 				Date nowDate = new Date();
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 				end = sdf.format(nowDate);
 			}
-
 
 			/*
 			 * messageDao.selectに引数としてInteger型のidを追加

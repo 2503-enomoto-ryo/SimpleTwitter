@@ -30,7 +30,6 @@ public class DeleteMessageServlet extends HttpServlet {
 		application.init();
 	}
 
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 

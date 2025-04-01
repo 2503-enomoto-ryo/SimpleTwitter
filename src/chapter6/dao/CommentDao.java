@@ -1,4 +1,5 @@
 package chapter6.dao;
+
 import static chapter6.utils.CloseableUtil.*;
 
 import java.sql.Connection;
@@ -28,6 +29,7 @@ public class CommentDao {
 
 	}
 
+	//コメントの登録
 	public void insert(Connection connection, Comment comment) {
 
 		log.info(new Object() {

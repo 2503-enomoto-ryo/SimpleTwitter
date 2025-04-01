@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import chapter6.beans.UserComment;
 import chapter6.exception.SQLRuntimeException;
 import chapter6.logging.InitApplication;
+
 public class UserCommentDao {
 
 	/**

@@ -22,57 +22,58 @@ import chapter6.service.MessageService;
 public class TopServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    /**
-    * ロガーインスタンスの生成
-    */
-    Logger log = Logger.getLogger("twitter");
+	/**
+	* ロガーインスタンスの生成
+	*/
+	Logger log = Logger.getLogger("twitter");
 
-    /**
-    * デフォルトコンストラクタ
-    * アプリケーションの初期化を実施する。
-    */
-    public TopServlet() {
-        InitApplication application = InitApplication.getInstance();
-        application.init();
+	/**
+	* デフォルトコンストラクタ
+	* アプリケーションの初期化を実施する。
+	*/
+	public TopServlet() {
+		InitApplication application = InitApplication.getInstance();
+		application.init();
 
-    }
+	}
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws IOException, ServletException {
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
 
+		log.info(new Object() {
+		}.getClass().getEnclosingClass().getName() +
+				" : " + new Object() {
+				}.getClass().getEnclosingMethod().getName());
 
-	  log.info(new Object(){}.getClass().getEnclosingClass().getName() +
-        " : " + new Object(){}.getClass().getEnclosingMethod().getName());
+		boolean isShowMessageForm = false;
+		User user = (User) request.getSession().getAttribute("loginUser");
+		if (user != null) {
+			isShowMessageForm = true;
+		}
 
-	  boolean isShowMessageForm = false;
-	  User user = (User) request.getSession().getAttribute("loginUser");
-	  if(user != null) {
-		  isShowMessageForm = true;
-	  }
+		/*
+		 * String型のuser_idの値をrequest.getParameter("user_id")で
+		 * JSPから受け取るように設定
+		 * MessageServiceのselectに引数としてString型のuser_idを追加
+		 *
+		 *String型のstart, endの値をrequest.getParameterで
+		 * JSPから受け取るように設定
+		 * 絞り込み機能実装のため、引数にString型のstart, endを追加
+		 */
+		String userId = request.getParameter("user_id");
+		String start = request.getParameter("start");
+		String end = request.getParameter("end");
+		List<UserMessage> messages = new MessageService().select(userId, start, end);
+		List<UserComment> comments = new CommentService().select();
 
-	  /*
-	   * String型のuser_idの値をrequest.getParameter("user_id")で
-	   * JSPから受け取るように設定
-	   * MessageServiceのselectに引数としてString型のuser_idを追加
-	   *
-	   *String型のstart, endの値をrequest.getParameterで
-	   * JSPから受け取るように設定
-	   * 絞り込み機能実装のため、引数にString型のstart, endを追加
-	   */
-	  String userId = request.getParameter("user_id");
-	  String start = request.getParameter("start");
-	  String end = request.getParameter("end");
-	  List<UserMessage> messages = new MessageService().select(userId, start, end);
-	  List<UserComment> comments = new CommentService().select();
-
-	  //各値をリクエストにセット
-	  request.setAttribute("start", start);
-	  request.setAttribute("end", end);
-	  request.setAttribute("messages", messages);
-	  request.setAttribute("comments", comments);
-	  request.setAttribute("isShowMessageForm", isShowMessageForm);
-      request.getRequestDispatcher("/top.jsp").forward(request, response);
-    }
+		//各値をリクエストにセット
+		request.setAttribute("start", start);
+		request.setAttribute("end", end);
+		request.setAttribute("messages", messages);
+		request.setAttribute("comments", comments);
+		request.setAttribute("isShowMessageForm", isShowMessageForm);
+		request.getRequestDispatcher("/top.jsp").forward(request, response);
+	}
 
 }

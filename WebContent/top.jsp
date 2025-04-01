@@ -72,9 +72,9 @@
 				<div class="message">
 					<div class="account-name">
 						<span class="account">
-						<a href="./?user_id=<c:out value="${message.userId}" /> ">
-						<c:out value="${message.account}" />
-						</a>
+							<a href="./?user_id=<c:out value="${message.userId}" /> ">
+								<c:out value="${message.account}" />
+							</a>
 						</span> <span class="name"><c:out value="${message.name}" /></span>
 					</div>
 					<div class="text">
@@ -108,7 +108,8 @@
 									<span class="name"><c:out value="${comment.name}" /></span>
 									<pre><c:out value="${comment.text}" /></pre>
 									<div class="date">
-										<fmt:formatDate value="${comment.createdDate}" pattern="yyyy/MM/dd HH:mm:ss" />
+										<fmt:formatDate value="${comment.createdDate}"
+											pattern="yyyy/MM/dd HH:mm:ss" />
 									</div>
 								</div>
 							</div>

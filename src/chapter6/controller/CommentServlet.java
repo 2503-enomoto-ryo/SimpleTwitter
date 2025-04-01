@@ -23,57 +23,59 @@ import chapter6.service.CommentService;
 public class CommentServlet extends HttpServlet {
 
 	/**
-	    * ロガーインスタンスの生成
-	    */
+	* ロガーインスタンスの生成
+	*/
 	Logger log = Logger.getLogger("twitter");
 
 	/**
-    * デフォルトコンストラクタ
-    * アプリケーションの初期化を実施する。
-    */
-    public CommentServlet() {
-        InitApplication application = InitApplication.getInstance();
-        application.init();
+	* デフォルトコンストラクタ
+	* アプリケーションの初期化を実施する。
+	*/
+	public CommentServlet() {
+		InitApplication application = InitApplication.getInstance();
+		application.init();
 
-    }
+	}
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	//返信コメントの登録
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 
-    	log.info(new Object() {
+		log.info(new Object() {
 		}.getClass().getEnclosingClass().getName() +
 				" : " + new Object() {
 				}.getClass().getEnclosingMethod().getName());
 
-    	HttpSession session = request.getSession();
-    	List<String> errorMessages = new ArrayList<String>();
+		HttpSession session = request.getSession();
+		List<String> errorMessages = new ArrayList<String>();
 
-    	String text = request.getParameter("text");
-    	String messageId = request.getParameter("message_id");
-    	if(!isValid(text, errorMessages)) {
-    		session.setAttribute("errorMessages", errorMessages);
+		//リクエストから返信コメント文と返信元ツイートのIDを取得
+		String text = request.getParameter("text");
+		String messageId = request.getParameter("message_id");
+		if (!isValid(text, errorMessages)) {
+			session.setAttribute("errorMessages", errorMessages);
 			response.sendRedirect("./");
 			return;
-    	}
+		}
 
-    	Comment comment = new Comment();
-    	comment.setText(text);
-    	comment.setMessageId(Integer.parseInt(messageId));
-    	User user = (User) session.getAttribute("loginUser");
+		Comment comment = new Comment();
+		comment.setText(text);
+		comment.setMessageId(Integer.parseInt(messageId));
+		User user = (User) session.getAttribute("loginUser");
 		comment.setUserId(user.getId());
 
-    	new CommentService().insert(comment);
-    	response.sendRedirect("./");
+		new CommentService().insert(comment);
+		response.sendRedirect("./");
 
-    }
+	}
 
-    private boolean isValid(String text, List<String> errorMessages) {
-    	log.info(new Object() {
+	private boolean isValid(String text, List<String> errorMessages) {
+		log.info(new Object() {
 		}.getClass().getEnclosingClass().getName() +
 				" : " + new Object() {
 				}.getClass().getEnclosingMethod().getName());
 
-    	if (StringUtils.isBlank(text)) {
+		if (StringUtils.isBlank(text)) {
 			errorMessages.add("メッセージを入力してください");
 		} else if (140 < text.length()) {
 			errorMessages.add("140文字以下で入力してください");
@@ -83,5 +85,5 @@ public class CommentServlet extends HttpServlet {
 			return false;
 		}
 		return true;
-    }
+	}
 }

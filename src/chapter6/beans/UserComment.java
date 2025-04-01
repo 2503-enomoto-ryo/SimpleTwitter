@@ -1,68 +1,68 @@
 package chapter6.beans;
+
 import java.io.Serializable;
 import java.util.Date;
 
 public class UserComment implements Serializable {
 
 	private int id;
-    private String account;
-    private String name;
-    private int messageId;
-    private String text;
-    private Date createdDate;
+	private String account;
+	private String name;
+	private int messageId;
+	private String text;
+	private Date createdDate;
 
-    // id
-    public int getId() {
-    	return id;
-    }
+	// id
+	public int getId() {
+		return id;
+	}
 
-    public void setId(int id) {
-    	this.id = id;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    // account
-    public String getAccount() {
-    	return account;
-    }
+	// account
+	public String getAccount() {
+		return account;
+	}
 
-    public void setAccount(String account) {
-    	this.account = account;
-    }
+	public void setAccount(String account) {
+		this.account = account;
+	}
 
-    // name
-    public String getName() {
-    	return name;
-    }
+	// name
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-    	this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    // messageId
-    public int getMessageId() {
-    	return messageId;
-    }
+	// messageId
+	public int getMessageId() {
+		return messageId;
+	}
 
-    public void setMessageId(int messageId) {
-    	this.messageId = messageId;
-    }
+	public void setMessageId(int messageId) {
+		this.messageId = messageId;
+	}
 
-    // text
-    public String getText() {
-    	return text;
-    }
+	// text
+	public String getText() {
+		return text;
+	}
 
-    public void setText(String text) {
-    	this.text = text;
-    }
+	public void setText(String text) {
+		this.text = text;
+	}
 
-    // createdDate
-    public Date getCreatedDate() {
-    	return createdDate;
-    }
+	// createdDate
+	public Date getCreatedDate() {
+		return createdDate;
+	}
 
-    public void setCreatedDate(Date createdDate) {
-    	this.createdDate = createdDate;
-    }
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
 }
-
